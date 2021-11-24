@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +17,11 @@ namespace FormsElements
         Button btn;
         Label lbl;
         PictureBox img;
+        CheckBox box_lbl, box_btn;
+        CheckBox c_btn1, c_btn2;
+        bool t = true;
+        RadioButton r_btn1, r_btn2;
+        
         public Form1()
         {
             this.Height = 400;
@@ -58,11 +64,24 @@ namespace FormsElements
             img.Size = new Size(100,100);
             img.Location = new Point(250,60);
             img.SizeMode = PictureBoxSizeMode.StretchImage;
-            img.Image = Image.FromFile(@"..\..\Images\park1.jpg");
-            img.Image = Image.FromFile(@"..\..\Images\park2.jpg");
-            img.Image = Image.FromFile(@"..\..\Images\park3.jpg");
-            img.Image = Image.FromFile(@"..\..\Images\park4.jpg");
-            img.MouseDoubleClick += img_MouseDoubleClick;
+            img.Image = Image.FromFile(@"..\..\allo.png");
+            img.Image = Image.FromFile(@"..\..\bf.jpg");
+            img.Image = Image.FromFile(@"..\..\pixel.png");
+            img.Image = Image.FromFile(@"..\..\petyx.png");
+            img.DoubleClick += Img_DoubleClick;
+
+            //-----------------------------------------------//
+
+            c_btn1 = new CheckBox();
+            c_btn1.Text = "vali mind";
+            c_btn1.Size = new Size(c_btn1.Text.Length * 9,20);
+            c_btn1.Location = new Point(300, 300);
+            c_btn1.CheckedChanged += C_btn1_CheckedChanged;
+            c_btn2 = new CheckBox();
+            c_btn2.Size = new Size(100, 100);
+
+            c_btn2.Image = Image.FromFile(@"..\..\pixel.png");
+            c_btn2.Location = new Point(300, 350);
 
             //-----------------------------------------------//
 
@@ -71,17 +90,18 @@ namespace FormsElements
 
             //-----------------------------------------------//
         }
-
-       //private void img_MouseDoubleClick(object sender, MouseEventArgs e)
-       //{
-       //    PictureBox img = newPictureBox();
-       //    img.Width = 400;
-       //    img.Height = 400;
-       //    Bitmap image = newBitmap("bg.jpg");
-       //    img.Dock = DockStyle.Fill;
-       //    img.Image = (Image)image;
-       //    Controls.Add(img);
-       //}
+       int Click = 0;
+       private void Img_DoubleClick(object sender, EventArgs e)
+       {
+            string[] images = { "park1.jpg", "park2.jp", "park3.jpg" };
+            string fail = images[Click];
+            img.Image = Image.FromFile(@"..\..\" + fail);
+            Click++;
+            if (Click==3)
+            {
+                Click = 0;
+            }
+        }
 
         private void Lbl_MouseLeave(object sender, EventArgs e)
         {
@@ -98,9 +118,21 @@ namespace FormsElements
                 this.Close();
         }
 
+        private void Box_btn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (box_btn.Checked)
+            {
+                Controls.Add(btn);
+            }
+            else
+            {
+                Controls.Remove(btn);
+            }
+        }
+
         private void Tree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Text=="Button")
+            if (e.Node.Text == "Button")
             {
                 this.Controls.Add(btn);
             }
@@ -114,6 +146,73 @@ namespace FormsElements
             {
 
             }
+            else if (e.Node.Text == "Märkeruut-CheckBox")
+            {
+                this.Controls.Add(c_btn1);
+                this.Controls.Add(c_btn2);
+            }
+
+            else if (e.Node.Text == "Radionupp")
+            {
+                r_btn1 = new RadioButton();
+                r_btn1.Text = "Black theme";
+                r_btn1.Location = new Point(300, 150);
+                r_btn2.Text = "White theme";
+                r_btn2 = new RadioButton();
+                this.Controls.Add(r_btn1);
+                this.Controls.Add(r_btn2);
+                r_btn1.CheckedChanged += new EventHandler(r_btn_Checked);
+            }
+
+            else if (e.Node.Text == "Messagebox")
+            {
+                MessageBox.Show("MessageBox", "oh hello there!");
+                var answer = MessageBox.Show("Want to see inputbox?","window with button",
+                    MessageBoxButtons.YesNo);
+                if (answer == DialogResult.Yes)
+                {
+                    string text = Interaction.InputBox("Write here your text", "InputBox", "some text");
+                    if (MessageBox.Show("Do you want to send that text to textbox?", "Text filling", MessageBoxButtons.OKCancel)
+                        == DialogResult.OK)
+                    {
+                        lbl.Text = text;
+                        Controls.Add(lbl);
+                    }
+                    else
+                    {
+                        lbl.Text = "So i would like to choose my text!";
+                        Controls.Add(lbl);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("One more message", "The easiest window");
+                }
+            }
         }
-    }
+
+        private void r_btn_Checked(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void C_btn1_CheckedChanged(object sender, EventArgs e)
+            {
+                if (t)
+                {
+                    this.Size = new Size(400,500);
+                    img.BorderStyle = BorderStyle.Fixed3D;
+                    c_btn1.Text = "teeme väiksem suurus";
+                    c_btn1.Font = new Font("Arial", 36, FontStyle.Bold);
+                    t = false;
+                }
+                else
+                {
+                    this.Size = new Size(700, 500);
+                    c_btn1.Text = "Suurendame";
+                    c_btn1.Font = new Font("Arial", 36, FontStyle.Regular);
+                    t = true;
+                }
+            }
+        }
 }

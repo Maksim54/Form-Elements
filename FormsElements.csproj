@@ -84,6 +84,7 @@
     <Content Include="bf.jpg" />
     <Content Include="petyx.png" />
     <Content Include="pixel.png" />
+    <Content Include="menu.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

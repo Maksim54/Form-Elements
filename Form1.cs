@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,37 +21,44 @@ namespace FormsElements
         CheckBox box_lbl, box_btn;
         CheckBox c_btn1, c_btn2;
         bool t = true;
-        RadioButton r_btn1, r_btn2;
+        RadioButton rad;
+        RadioButton rad2;
         TabPage tabPage1, tabPage2, tabPage3;
         TabControl tabc;
+        TabControl tabC;
+        ListBox list;
+        TextBox txt;
+        DataGridView dgrid;
         public Form1()
         {
-          //--------------------------------------------------------\\
-            //                                                       \\
-            this.Height = 450;//                                      \\
-            this.Width = 800;//                                        \\
-            this.Text ="Elements form";//                               \\
-            //this.BackgroundImage = "bg.jpg";                           \\
-            this.BackColor = Color.Green;//                               \\
-            tree = new TreeView();//                                       \\
-            tree.Dock =DockStyle.Left;//                                    \\
-            tree.AfterSelect += Tree_AfterSelect;//                          \\
-            TreeNode tn = new TreeNode("Elements");                          //
-            tn.Nodes.Add(new TreeNode("Button"));                           //
-            tn.Nodes.Add(new TreeNode("Silt-Label"));                      //
-            tn.Nodes.Add(new TreeNode("PictureBox"));                     //
-            tn.Nodes.Add(new TreeNode("Märkeruut-CheckBox"));            //
-            tn.Nodes.Add(new TreeNode("Radionupp-Radiobutton"));        //
-            tn.Nodes.Add(new TreeNode("Tekstkast-Textbox"));           //
-            tn.Nodes.Add(new TreeNode("Kaart-TabControl"));           //
-            tn.Nodes.Add(new TreeNode("MessageBox"));                //
-                                                                    //
-          //-------------------------------------------------------//
-             //                                                    \\  
+          //----------------------------------------------------------\\
+            //                                                         \\
+            this.Height = 450;//                                        \\
+            this.Width = 800;//                                          \\
+            this.Text ="Elements form";//                                 \\
+            //this.BackgroundImage = "bg.jpg";                             \\
+            this.BackColor = Color.Green;//                                 \\
+            tree = new TreeView();//                                         \\
+            tree.Dock =DockStyle.Left;//                                      \\
+            tree.AfterSelect += Tree_AfterSelect;//                            \\
+            TreeNode tn = new TreeNode("Elements");                            //
+            tn.Nodes.Add(new TreeNode("Button"));                             //
+            tn.Nodes.Add(new TreeNode("Silt-Label"));                        //
+            tn.Nodes.Add(new TreeNode("PictureBox"));                       //
+            tn.Nodes.Add(new TreeNode("Märkeruut-CheckBox"));              //
+            tn.Nodes.Add(new TreeNode("Radionupp-Radiobutton"));          //
+            tn.Nodes.Add(new TreeNode("Tekstkast-Textbox"));             //
+            tn.Nodes.Add(new TreeNode("Kaart-TabControl"));             //
+            tn.Nodes.Add(new TreeNode("MainMenu"));                    //
+            tn.Nodes.Add(new TreeNode("MessageBox"));                 //
+            tn.Nodes.Add(new TreeNode("Listbox"));                   //
+            tn.Nodes.Add(new TreeNode("DataGridView"));             //
+            //-----------------------------------------------------//
+            //                                                     \\
             //Button                                                \\
             btn = new Button();//                                    \\
             btn.Text = "Don't click that button!"; //                 \\
-            btn.Location = new Point(250, 20);     //                  \\
+            btn.Location = new Point(310, 20);     //                  \\
             btn.Height = 20;                                           //
             btn.Width = 100;                                          //
             btn.Click += Btn_Click;                                  //
@@ -93,17 +101,36 @@ namespace FormsElements
             c_btn2.Location = new Point(300, 350);                    //
                                                                      //
           //--------------------------------------------------------//
-            //                                                      \\
-            tree.Nodes.Add(tn);//                                    \\
-            this.Controls.Add(tree);                                 //
-                                                                    //
-          //-------------------------------------------------------//
+         //                                                         \\
+        //                                                        \\
+       //                                                        \\
+                                                                      //
+                                                                     //
+            //------------------------------------------------------//
+            txt = new TextBox();
+            txt.Size = new Size(75,25);
+            txt.Location = new Point(70,225);
+            txt.Font = new Font("Georgia",12);
 
+            rad = new RadioButton();
+            rad.Size = new Size(40, 25);
+            rad.Location = new Point(150, 190);
+            rad.Text = "1";
+            rad.Click += Rad_Click; ;
+
+            rad2 = new RadioButton();
+            rad2.Size = new Size(40, 25);
+            rad2.Location = new Point(150, 225);
+            rad2.Text = "2";
+            rad2.Click += Rad_Click2; ;
+
+            tree.Nodes.Add(tn);
+            this.Controls.Add(tree);
         }
        int Click = 0;
        private void Img_DoubleClick(object sender, EventArgs e)
        {
-            string[] images = { "park1.jpg", "park2.jp", "park3.jpg" };
+            string[] images = { "allo.png", "bf.jpg", "pixel.png" };
             string fail = images[Click];
             img.Image = Image.FromFile(@"..\..\" + fail);
             Click++;
@@ -164,6 +191,40 @@ namespace FormsElements
                 this.Controls.Add(lbl);
             }
 
+            else if (e.Node.Text == "Kaart-TabControl")
+            {
+                tabC = new TabControl();
+                tabC.Location = new Point(500, 220);
+                tabC.Size = new Size(250, 200);
+                TabPage tabP1 = new TabPage("Esimene");//Заголовок вкладки. Создали вкладку
+                WebBrowser wb = new WebBrowser();
+                wb.Url = new Uri("https://www.tthk.ee/");
+                tabP1.Controls.Add(wb);
+
+
+                TabPage tabP2 = new TabPage("Teine");//Заголовок вкладки. Создали вкладку
+                WebBrowser wb2 = new WebBrowser();
+                wb2.Url = new Uri("https://github.com/NikitaRimitsen/");
+                tabP2.Controls.Add(wb2);
+
+                TabPage tabP3 = new TabPage("Kolmas");//Заголовок вкладки. Создали вкладку
+                WebBrowser wb3 = new WebBrowser();
+                wb3.Url = new Uri("https://www.youtube.com/");
+                tabP3.Controls.Add(wb3);
+
+                TabPage tabP4 = new TabPage("Neljas");//Заголовок вкладки. Создали вкладку
+                tabP4.DoubleClick += TabP4_DoubleClick;
+                tabC.DoubleClick += TabC_DoubleClick;
+
+                //tabC.Selected += TabC_Selected;//Создали функцию, которая закрывает все вкладки, если нажать на вкладку
+
+                tabC.Controls.Add(tabP1);
+                tabC.Controls.Add(tabP2);
+                tabC.Controls.Add(tabP3);
+                tabC.Controls.Add(tabP4);
+                this.Controls.Add(tabC);
+            }
+
             else if (e.Node.Text == "Märkeruut-CheckBox")
             {
                 box_btn = new CheckBox();
@@ -177,65 +238,130 @@ namespace FormsElements
                 box_btn.CheckedChanged += Box_btn_CheckedChanged;
             }
 
-            else if (e.Node.Text == "Radionupp")
+            else if (e.Node.Text == "TextBox")
             {
-                r_btn1 = new RadioButton();
-                r_btn1.Text = "Black theme";
-                r_btn1.Location = new Point(300, 150);
-                r_btn2 = new RadioButton();
-                r_btn2.Text = "White theme";
-                r_btn2.Location = new Point(300, 150);
-                this.Controls.Add(r_btn1);
-                this.Controls.Add(r_btn2);
-                r_btn1.CheckedChanged += new EventHandler(R_btn1_CheckedChanged);
-                r_btn2.CheckedChanged += new EventHandler(R_btn1_CheckedChanged);
+                this.Controls.Add(txt);
             }
 
-            else if (e.Node.Text == "Messagebox")
+            else if (e.Node.Text == "ListBox")
             {
-                MessageBox.Show("MessageBox", "oh hello there!");
-                var answer = MessageBox.Show("Want to see inputbox?", "window with button",
-                    MessageBoxButtons.YesNo);
+                this.Controls.Add(list);
+            }
+
+            else if (e.Node.Text == "MainMenu")
+            {
+                MainMenu menu = new MainMenu();
+                MenuItem mf = new MenuItem("File");
+                mf.MenuItems.Add("Exit", new EventHandler(menuFile_Select));
+                mf.MenuItems.Add("Image", new EventHandler(menuFile_Select2));
+                mf.MenuItems.Add("Full sized", new EventHandler(menuFile_Select3));
+                mf.MenuItems.Add("Minimized", new EventHandler(menuFile_Select4));
+                menu.MenuItems.Add(mf);
+                this.Menu = menu;
+            }
+
+            else if (e.Node.Text == "DataGridView")
+            {
+                DataSet ds = new DataSet("XML fail.menuu");
+                ds.ReadXml(@"..\..\menu.xml");
+                DataGridView dg = new DataGridView();
+                dg.Width = 300;
+                dg.Height = 160;
+                dg.Location = new Point(150,250);
+                dg.AutoGenerateColumns = true;
+                dg.DataSource = ds;
+                dg.DataMember = "food";
+                this.Controls.Add(dg);
+            }
+
+            else if (e.Node.Text == "MessageBox")
+            {
+                MessageBox.Show("MessageBox", "Самое обычное окно");
+                var answer = MessageBox.Show("Хочешь посмотреть какая сегодня погода?", "Погода", MessageBoxButtons.YesNo);
                 if (answer == DialogResult.Yes)
                 {
-                    string text = Interaction.InputBox("Write here your text", "InputBox", "some text");
-                    if (MessageBox.Show("Do you want to send that text to textbox?", "Text filling", MessageBoxButtons.OKCancel)
-                        == DialogResult.OK)
+                    Process.Start("https://pogoda.ee/");
+
+                    string text = Interaction.InputBox("Напиши своё впечатление о погоде", "InputBox", "Mingi tekst");
+                    if (MessageBox.Show("Kas tahad tekst saada Tekskastisse?", "Teksti salvestamine", MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         lbl.Text = text;
                         Controls.Add(lbl);
                     }
                     else
                     {
-                        lbl.Text = "So i would like to choose my text!";
-                        Controls.Add(lbl);
+                        MessageBox.Show("Ты меня расстраиваешь", "Грустное окно");
+
                     }
                 }
                 else
                 {
-                    MessageBox.Show("One more message", "The easiest window");
+                    MessageBox.Show("Ты меня расстраиваешь", "Грустное окно");
                 }
             }
+        }
 
-            else if (e.Node.Text == "Kaart")
+        private void menuFile_Select3(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void menuFile_Select4(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void menuFile_Select2(object sender, EventArgs e)
+        {
+            img.Image = Image.FromFile(@"../../pixel.png");
+        }
+
+        private void menuFile_Select(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void TabC_DoubleClick(object sender, EventArgs e)
+        {
+            this.tabC.TabPages.Remove(tabC.SelectedTab);
+        }
+
+        private void TabP4_DoubleClick(object sender, EventArgs e)
+        {
+            string title = "tabP" + (tabC.TabCount + 1).ToString();
+            TabPage tb = new TabPage(title);
+            tabC.TabPages.Add(tb);
+        }
+
+        private void List_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (list.SelectedIndex)
             {
-                TabControl tabc = new TabControl();
-                tabc.Location = new Point(450,50);
-                tabc.Size = new Size(150, 80);
-                TabPage tabPage1 = new TabPage("First");
-                WebBrowser wb = new WebBrowser();
-                wb.Url = new Uri("https://www.youtube.com/");
-                tabPage1.Controls.Add(wb);
-                TabPage tabPage2 = new TabPage("Second");
-                TabPage tabPage3 = new TabPage("Third");
-                tabPage3.DoubleClick += TabPage3_DoubleClick; ;
-                tabc.Controls.Add(tabPage1);
-                tabc.Controls.Add(tabPage2);
-                tabc.Controls.Add(tabPage3);
-                this.Controls.Add(tabc);
-                tabc.Selected += Tabc_Selected;
-                tabc.DoubleClick += Tabc_DoubleClick;
+                case 0:
+                    list.BackColor = Color.Green;
+                    break;
+                case 1:
+                    list.BackColor = Color.Red;
+                    break;
+                case 2:
+                    list.BackColor = Color.Yellow;
+                    break;
+                case 3:
+                    list.BackColor = Color.Orange;
+                    break;
+                case 4:
+                    list.BackColor = Color.Violet;
+                    break;
+                default:
+                    list.BackColor = Color.Transparent;
+                    break;
             }
+
+        }
+
+        private void menuFile_Exit_Select(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void Tabc_DoubleClick(object sender, EventArgs e)
@@ -247,7 +373,7 @@ namespace FormsElements
 
         private void Tabc_Selected(object sender, TabControlEventArgs e)
         {
-            //this.tabc.TabPages.Clear();
+            this.tabc.TabPages.Clear();
             this.tabc.TabPages.Remove(tabc.SelectedTab);
         }
 
@@ -258,27 +384,16 @@ namespace FormsElements
             tabc.TabPages.Add(tb);
         }
 
-        private void R_btn1_CheckedChanged(object sender, EventArgs e)
+        private void Rad_Click(object sender, EventArgs e)
         {
-            if (r_btn1.Checked)
-            {
-                this.BackColor = Color.Black;
-                r_btn2.ForeColor = Color.White;
-                r_btn1.ForeColor = Color.White;
-            }
-            else if (r_btn2.Checked)
-            {
-                this.BackColor = Color.White;
-                r_btn2.ForeColor = Color.Black;
-                r_btn1.ForeColor = Color.Black;
-            }
-
+            tree.BackColor = Color.Black;
+            tree.ForeColor = Color.White;
         }
-
-        //private void r_btn_Checked(object sender, EventArgs e)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        private void Rad_Click2(object sender, EventArgs e)
+        {
+            tree.BackColor = Color.White;
+            tree.ForeColor = Color.Black;
+        }
 
         private void C_btn1_CheckedChanged(object sender, EventArgs e)
             {
